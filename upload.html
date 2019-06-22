@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<style type="text/css">
+	* {font-family: arial, sans-serif; }
+	.page {width:80%;margin-left:auto;margin-right:auto;}
+	</style>
 </head>
 <body>
- <form action="upload.asp" method="post" enctype="multipart/form-data">
-     <input type="file" name="arquivo" />
-        <input type="submit" value="Upload" />
+
+<div class="page">
+
+    <h1>Envio de formulário sem componentes</h1>
+    <h2>Envie arquivos e itens de formulários através de um componente nativo, sem componentes COM para ASP clássico</h2>
+    
+    <hr />
+    
+    <p>Abaixo, o formulário irá enviar para o arquivo upload.asp as informações para serem salvas.</p>
+    <p>O diretório "upload" dentro do projeto, deve ter permissão para escrita para o usuário do Internet Information Services (IIS).</p>
+    <p>Em geral, o grupo de usuários que necessitará de permissão deve ser: IIS_IUSRS.</p>
+    
+    <form action="upload.asp" method="post" enctype="multipart/form-data" target="iframe_upload">
+
+        <input type="hidden" name="mensagem" value="Elemento de formulário enviado com sucesso!" />
+    
+    	<p>Nome (para exemplo:)</p>
+        <input type="text" name="exemplo" value="Nome para exemplo." />
+        
+        <p>Arquivo:</p>
+        <input type="file" name="arquivo" />
+        
+        <input type="submit" value="Enviar por submit" />
+        <input type="button" value="Enviar por ajax" onclick="enviar();" />
     </form>
+    
+    <br />
+    
+    <iframe name="iframe_upload" src="upload.asp" width="100%" height="200px"></iframe>
+    
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+		function enviar() {
+			
+			var form = $("form");
+			
+			var formdata = false;
+			if (window.FormData){
+				formdata = new FormData(form[0]);
+			}
+			
+			$.ajax({
+				url         : 'upload.ajax.asp',
+				data        : formdata ? formdata : form.serialize(),
+				cache       : false,
+				contentType : false,
+				processData : false,
+				type        : 'POST',
+				success     : function(data, textStatus, jqXHR){
+					
+					console.log(data);
+					alert(data);
+					// Callback code
+				}
+			});			
+			
+			
+		}
+	</script>
+    
+</div>
+
 </body>
 </html>

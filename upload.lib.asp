@@ -1,19 +1,19 @@
 <%
 Const adTypeBinary = 1
 Const adTypeText = 2
-Const xfsCompleted    = &H0 '0  Formul√°rio foi processado com sucesso.
-Const xfsNotPost      = &H1 '1  M√©todo de envio n√£o √© POST.
-Const xfsZeroLength   = &H2 '2  Conte√∫do de tamanho zero (n√£o h√° conte√∫do no formul√°rio de origem)
-Const xfsInProgress   = &H3 '3  Formul√°rio est√° no meio do processo.
-Const xfsNone         = &H5 '5  Estado inicial do formul√°rio.
+Const xfsCompleted    = &H0 '0  Formul·rio foi processado com sucesso.
+Const xfsNotPost      = &H1 '1  MÈtodo de envio n„o È POST.
+Const xfsZeroLength   = &H2 '2  Conte˙do de tamanho zero (n„o h· conte˙do no formul·rio de origem)
+Const xfsInProgress   = &H3 '3  Formul·rio est· no meio do processo.
+Const xfsNone         = &H5 '5  Estado inicial do formul·rio.
 Const xfsError        = &HA '10  Se houve algum erro.  
-Const xfsNoBoundary   = &HB '11  Boundary dos arquivos em formul√°rio multipart/form-data n√£o foi especificado.
-Const xfsUnknownType  = &HC '12  Formul√°rio desconhecido (Content-type necessita ser application/x-www-form-urlencoded ou multipart/form-data) 
+Const xfsNoBoundary   = &HB '11  Boundary dos arquivos em formul·rio multipart/form-data n„o foi especificado.
+Const xfsUnknownType  = &HC '12  Formul·rio desconhecido (Content-type necessita ser application/x-www-form-urlencoded ou multipart/form-data) 
 Const xfsSizeLimit    = &HD '13  O tamanho excede o limite permitido.
 Const xfsTimeOut      = &HE '14  O tempo excede o limite permitido.
 Const xfsNoConnected  = &HF '15  O cliente desconectou antes de completar o upload.
 Const xfsErrorBinaryRead = &H10 '16  Erro inexperado ocorreu (Erro ASP).
-Const MaxLicensedLimit = &H77359400 ' Tamanho m√°ximo do upload para qualquer situa√ß√£o = 2 GB (limite do IIS).
+Const MaxLicensedLimit = &H77359400 ' Tamanho m·ximo do upload para qualquer situaÁ„o = 2 GB (limite do IIS).
 Class ASPForm
  Public ChunkReadSize, BytesRead, TotalBytes, UploadID
  Private m_ReadTime
@@ -131,7 +131,7 @@ Class ASPForm
   if len(ProgressData) > 0 then
    if ProgressData = "DONE" Then
     ProgressFile.Done
-    Err.Raise 1, "getForm", "Conclu√≠do"
+    Err.Raise 1, "getForm", "ConcluÌdo"
    Else
     ProgressData = Split (ProgressData, vbCrLf)
     if ubound(ProgressData) = 3 Then
@@ -176,7 +176,7 @@ Class ASPForm
  End Property 
   Public Property Let SizeLimit(NewLimit)
  if NewLimit > MaxLicensedLimit Then
-   Err.Raise 1, "Upload grande", "Seu upload ultrapassou o limite m√°ximo suportado por este servidor."
+   Err.Raise 1, "Upload grande", "Seu upload ultrapassou o limite m·ximo suportado por este servidor."
    m_SizeLimit = MaxLicensedLimit
   Else
    m_SizeLimit = NewLimit
@@ -185,7 +185,7 @@ Class ASPForm
  Public Boundary
  Private m_Items 
  Private m_State
- Private m_SizeLimit 'Define o tamanho limite do formul√°rio.
+ Private m_SizeLimit 'Define o tamanho limite do formul·rio.
  Private bSourceData 'ADODB.Stream
  Private StartUploadTime , TempFiolder 
  Private ProgressFile 'Informa o atual progresso de upload do arquivo
@@ -196,7 +196,7 @@ Class cFormFields
  Dim m_Count
  Public Default Property Get Item(Key)
   If vartype(Key) = vbInteger or vartype(Key) = vbLong then
-   if Key<1 or Key>m_Count Then Err.raise "Item n√£o encontrado"
+   if Key<1 or Key>m_Count Then Err.raise "Item n„o encontrado"
    Set Item = m_Items(Key-1)
    Exit Property
   end if
@@ -317,7 +317,7 @@ Class cFormFields
    Add FormFieldName, Field
    TwoCharsAfterEndBoundary = BinaryToString(MidB(Binary, PosCloseBoundary + LenB(Boundary), 2))
    isLastBoundary = TwoCharsAfterEndBoundary = "--"
-   If Not isLastBoundary Then 'Final do boundary. Segue para pr√≥ximo arquivo.
+   If Not isLastBoundary Then 'Final do boundary. Segue para prÛximo arquivo.
     PosOpenBoundary = PosCloseBoundary
     PosCloseBoundary = InStrB(PosOpenBoundary + LenB(Boundary), Binary, Boundary)
    End If
@@ -335,7 +335,7 @@ Class cProgressFile
  Public Property Let Contents(inContents)
   WriteFile TempFileName, inContents
  End Property
- Public Sub Done 'Remove arquivo tempor√°rio quando alcan√ßa sucesso no upload.
+ Public Sub Done 'Remove arquivo tempor·rio quando alcanÁa sucesso no upload.
   FS.DeleteFile TempFileName
  End Sub
  Public Property Get UploadID()
@@ -393,7 +393,7 @@ Class cFormField
    fullFileName = Path & "\" & FileName
    SaveAs fullFileName
   Else
-   Err.raise "O campo de texto " & Name & " n√£o tem um nome de arquivo."
+   Err.raise "O campo de texto " & Name & " n„o tem um nome de arquivo."
   End If
  End Sub
  Public Sub SaveAs(newFileName)

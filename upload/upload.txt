@@ -1,0 +1,3 @@
+This directory store all uploaded files from example project.
+For it's works, check if upload directory have an apropriate NTFS permissions to w3wp.exe to write.
+The common user for w3wp.exe is IUSR guest user.
